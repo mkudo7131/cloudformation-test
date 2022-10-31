@@ -1,0 +1,403 @@
+AWSTemplateFormatVersion: 2010-09-09
+Metadata:
+  'AWS::CloudFormation::Designer':
+    2dafee17-389c-42d3-b26d-dc0094a8a4c0:
+      size:
+        width: 810
+        height: 320
+      position:
+        x: 120
+        'y': 90
+      z: 0
+      embeds:
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+    7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c:
+      size:
+        width: 500
+        height: 250
+      position:
+        x: 350
+        'y': 120
+      z: 1
+      parent: 2dafee17-389c-42d3-b26d-dc0094a8a4c0
+      embeds:
+        - 09a68bbf-440c-40ad-a310-8c9d1c1144b8
+        - 09b7e57b-c29b-4f62-b0b2-142dbd9cf0c5
+      dependson:
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+    09b7e57b-c29b-4f62-b0b2-142dbd9cf0c5:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 440
+        'y': 190
+      z: 2
+      parent: 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+      embeds: []
+      iscontainedinside:
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+        - 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+    09a68bbf-440c-40ad-a310-8c9d1c1144b8:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 649.6129252013493
+        'y': 181.1885362064829
+      z: 2
+      parent: 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+      embeds: []
+    05c8ed66-54df-4d87-9a5e-a76330ad19b9:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: -100
+        'y': 200
+      z: 0
+      embeds: []
+    235b44b2-3d5d-4af7-8967-47608608ef5d:
+      source:
+        id: 2dafee17-389c-42d3-b26d-dc0094a8a4c0
+      target:
+        id: 05c8ed66-54df-4d87-9a5e-a76330ad19b9
+      z: 0
+    78db03ae-794f-4298-99cd-8536bc68ce8e:
+      size:
+        width: 140
+        height: 130
+      position:
+        x: 60
+        'y': -80
+      z: 0
+      embeds:
+        - 66514488-6226-4b4f-9e4e-58ebdbd835d8
+    66514488-6226-4b4f-9e4e-58ebdbd835d8:
+      size:
+        width: 60
+        height: 60
+      position:
+        x: 90
+        'y': -40
+      z: 1
+      parent: 78db03ae-794f-4298-99cd-8536bc68ce8e
+      embeds: []
+      iscontainedinside:
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+        - 78db03ae-794f-4298-99cd-8536bc68ce8e
+      dependson:
+        - 05c8ed66-54df-4d87-9a5e-a76330ad19b9
+Resources:
+  VPC:
+    Type: 'AWS::EC2::VPC'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 2dafee17-389c-42d3-b26d-dc0094a8a4c0
+  PublicSubnet:
+    Type: 'AWS::EC2::Subnet'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 7dfbfb62-34f0-47c9-a898-73ebeb3cbf0c
+    DependsOn:
+      - PublicRouteTable
+  WebServerInstance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      NetworkInterfaces:
+        - SubnetId: !Ref PublicSubnet
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 09b7e57b-c29b-4f62-b0b2-142dbd9cf0c5
+  WebServerSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 09a68bbf-440c-40ad-a310-8c9d1c1144b8
+  InternetGateway:
+    Type: 'AWS::EC2::InternetGateway'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 05c8ed66-54df-4d87-9a5e-a76330ad19b9
+  EC2VPCGHG9M:
+    Type: 'AWS::EC2::VPCGatewayAttachment'
+    Properties:
+      InternetGatewayId: !Ref InternetGateway
+      VpcId: !Ref VPC
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 235b44b2-3d5d-4af7-8967-47608608ef5d
+  PublicRouteTable:
+    Type: 'AWS::EC2::RouteTable'
+    Properties: {}
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 78db03ae-794f-4298-99cd-8536bc68ce8e
+  PulicRoute:
+    Type: 'AWS::EC2::Route'
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+    Metadata:
+      'AWS::CloudFormation::Designer':
+        id: 66514488-6226-4b4f-9e4e-58ebdbd835d8
+    DependsOn:
+      - InternetGateway
+Parameters:
+  InstanceType:
+    Description: WebServer EC2 instance type
+    Type: String
+    Default: t2.small
+    AllowedValues:
+      - t1.micro
+      - t2.nano
+      - t2.micro
+      - t2.small
+      - t2.medium
+      - t2.large
+      - m1.small
+      - m1.medium
+      - m1.large
+      - m1.xlarge
+      - m2.xlarge
+      - m2.2xlarge
+      - m2.4xlarge
+      - m3.medium
+      - m3.large
+      - m3.xlarge
+      - m3.2xlarge
+      - m4.large
+      - m4.xlarge
+      - m4.2xlarge
+      - m4.4xlarge
+      - m4.10xlarge
+      - c1.medium
+      - c1.xlarge
+      - c3.large
+      - c3.xlarge
+      - c3.2xlarge
+      - c3.4xlarge
+      - c3.8xlarge
+      - c4.large
+      - c4.xlarge
+      - c4.2xlarge
+      - c4.4xlarge
+      - c4.8xlarge
+      - g2.2xlarge
+      - g2.8xlarge
+      - r3.large
+      - r3.xlarge
+      - r3.2xlarge
+      - r3.4xlarge
+      - r3.8xlarge
+      - i2.xlarge
+      - i2.2xlarge
+      - i2.4xlarge
+      - i2.8xlarge
+      - d2.xlarge
+      - d2.2xlarge
+      - d2.4xlarge
+      - d2.8xlarge
+      - hi1.4xlarge
+      - hs1.8xlarge
+      - cr1.8xlarge
+      - cc2.8xlarge
+      - cg1.4xlarge
+    ConstraintDescription: must be a valid EC2 instance type.
+  KeyName:
+    Description: Name of an EC2 KeyPair to enable SSH access to the instance.
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    ConstraintDescription: must be the name of an existing EC2 KeyPair.
+  SSHLocation:
+    Description: ' The IP address range that can be used to access the web server using SSH.'
+    Type: String
+    MinLength: '9'
+    MaxLength: '18'
+    Default: 0.0.0.0/0
+    AllowedPattern: '(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})/(\d{1,2})'
+    ConstraintDescription: must be a valid IP CIDR range of the form x.x.x.x/x.
+Mappings:
+  AWSInstanceType2Arch:
+    t1.micro:
+      Arch: HVM64
+    t2.nano:
+      Arch: HVM64
+    t2.micro:
+      Arch: HVM64
+    t2.small:
+      Arch: HVM64
+    t2.medium:
+      Arch: HVM64
+    t2.large:
+      Arch: HVM64
+    m1.small:
+      Arch: HVM64
+    m1.medium:
+      Arch: HVM64
+    m1.large:
+      Arch: HVM64
+    m1.xlarge:
+      Arch: HVM64
+    m2.xlarge:
+      Arch: HVM64
+    m2.2xlarge:
+      Arch: HVM64
+    m2.4xlarge:
+      Arch: HVM64
+    m3.medium:
+      Arch: HVM64
+    m3.large:
+      Arch: HVM64
+    m3.xlarge:
+      Arch: HVM64
+    m3.2xlarge:
+      Arch: HVM64
+    m4.large:
+      Arch: HVM64
+    m4.xlarge:
+      Arch: HVM64
+    m4.2xlarge:
+      Arch: HVM64
+    m4.4xlarge:
+      Arch: HVM64
+    m4.10xlarge:
+      Arch: HVM64
+    c1.medium:
+      Arch: HVM64
+    c1.xlarge:
+      Arch: HVM64
+    c3.large:
+      Arch: HVM64
+    c3.xlarge:
+      Arch: HVM64
+    c3.2xlarge:
+      Arch: HVM64
+    c3.4xlarge:
+      Arch: HVM64
+    c3.8xlarge:
+      Arch: HVM64
+    c4.large:
+      Arch: HVM64
+    c4.xlarge:
+      Arch: HVM64
+    c4.2xlarge:
+      Arch: HVM64
+    c4.4xlarge:
+      Arch: HVM64
+    c4.8xlarge:
+      Arch: HVM64
+    g2.2xlarge:
+      Arch: HVMG2
+    g2.8xlarge:
+      Arch: HVMG2
+    r3.large:
+      Arch: HVM64
+    r3.xlarge:
+      Arch: HVM64
+    r3.2xlarge:
+      Arch: HVM64
+    r3.4xlarge:
+      Arch: HVM64
+    r3.8xlarge:
+      Arch: HVM64
+    i2.xlarge:
+      Arch: HVM64
+    i2.2xlarge:
+      Arch: HVM64
+    i2.4xlarge:
+      Arch: HVM64
+    i2.8xlarge:
+      Arch: HVM64
+    d2.xlarge:
+      Arch: HVM64
+    d2.2xlarge:
+      Arch: HVM64
+    d2.4xlarge:
+      Arch: HVM64
+    d2.8xlarge:
+      Arch: HVM64
+    hi1.4xlarge:
+      Arch: HVM64
+    hs1.8xlarge:
+      Arch: HVM64
+    cr1.8xlarge:
+      Arch: HVM64
+    cc2.8xlarge:
+      Arch: HVM64
+  AWSRegionArch2AMI:
+    us-east-1:
+      HVM64: ami-0ff8a91507f77f867
+      HVMG2: ami-0a584ac55a7631c0c
+    us-west-2:
+      HVM64: ami-a0cfeed8
+      HVMG2: ami-0e09505bc235aa82d
+    us-west-1:
+      HVM64: ami-0bdb828fd58c52235
+      HVMG2: ami-066ee5fd4a9ef77f1
+    eu-west-1:
+      HVM64: ami-047bb4163c506cd98
+      HVMG2: ami-0a7c483d527806435
+    eu-west-2:
+      HVM64: ami-f976839e
+      HVMG2: NOT_SUPPORTED
+    eu-west-3:
+      HVM64: ami-0ebc281c20e89ba4b
+      HVMG2: NOT_SUPPORTED
+    eu-central-1:
+      HVM64: ami-0233214e13e500f77
+      HVMG2: ami-06223d46a6d0661c7
+    ap-northeast-1:
+      HVM64: ami-06cd52961ce9f0d85
+      HVMG2: ami-053cdd503598e4a9d
+    ap-northeast-2:
+      HVM64: ami-0a10b2721688ce9d2
+      HVMG2: NOT_SUPPORTED
+    ap-northeast-3:
+      HVM64: ami-0d98120a9fb693f07
+      HVMG2: NOT_SUPPORTED
+    ap-southeast-1:
+      HVM64: ami-08569b978cc4dfa10
+      HVMG2: ami-0be9df32ae9f92309
+    ap-southeast-2:
+      HVM64: ami-09b42976632b27e9b
+      HVMG2: ami-0a9ce9fecc3d1daf8
+    ap-south-1:
+      HVM64: ami-0912f71e06545ad88
+      HVMG2: ami-097b15e89dbdcfcf4
+    us-east-2:
+      HVM64: ami-0b59bfac6be064b78
+      HVMG2: NOT_SUPPORTED
+    ca-central-1:
+      HVM64: ami-0b18956f
+      HVMG2: NOT_SUPPORTED
+    sa-east-1:
+      HVM64: ami-07b14488da8ea02a0
+      HVMG2: NOT_SUPPORTED
+    cn-north-1:
+      HVM64: ami-0a4eaf6c4454eda75
+      HVMG2: NOT_SUPPORTED
+    cn-northwest-1:
+      HVM64: ami-6b6a7d09
+      HVMG2: NOT_SUPPORTED
+Outputs:
+  URL:
+    Value: !Join 
+      - ''
+      - - 'http://'
+        - !GetAtt 
+          - WebServerInstance
+          - PublicIp
+    Description: Newly created application URL
