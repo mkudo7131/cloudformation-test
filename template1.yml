@@ -408,7 +408,7 @@ Resources:
             - Configure
         Install:
           packages:
-            yum:
+            yam:
               mysql: []
               mysql-server: []
               mysql-libs: []
