@@ -116,8 +116,8 @@ Resources:
    BlockDeviceMappings:
     - DeviceName: /dev/xvda
       Ebs:
-        DeleteOnTermination: true
-        Encrypted: false
+        DeleteOnTermination: false
+        Encrypted: true
         VolumeSize: 8
         VolumeType: gp3
    NetworkInterfaces:
