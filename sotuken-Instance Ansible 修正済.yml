@@ -1,0 +1,141 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+
+# VPC
+
+ VpcId:
+  Description: Select your vpc id.
+  Type: AWS::EC2::VPC::Id
+
+# サブネット
+
+ WebSubnetId:
+  Description: Select your subnet id that exist in your selected vpc.
+  Type: AWS::EC2::Subnet::Id
+ AnsibleSubnetId:
+  Description: Select your subnet id that exist in your selected vpc.
+  Type: AWS::EC2::Subnet::Id
+
+# Webサーバ
+
+ WebKeyName:
+  Description: Select your key pair.
+  Type: AWS::EC2::KeyPair::KeyName
+ WebServerName:
+  Description: Input a Webserver name.
+  Type: String
+
+# Ansibleサーバ
+
+ AnsibleServerName:
+  Description: Input a Ansibleserver name.
+  Type: String
+ AnsibleKeyName:
+  Description: Select your key pair.
+  Type: AWS::EC2::KeyPair::KeyName
+
+# セキュリティグループ
+
+ WebSGName:
+  Description: Input a Security Group name.
+  Type: String
+ AnsibleSGName:
+  Description: Input a Security Group name.
+  Type: String
+  
+
+Resources:
+
+#Webサーバ
+
+ WebServer:
+  Type: AWS::EC2::Instance
+  Properties:
+   ImageId: ami-09d3b3274b6c5d4aa
+   
+   InstanceType: t2.micro
+   KeyName: !Ref WebKeyName
+   BlockDeviceMappings:
+    - DeviceName: '/dev/xvda'
+      Ebs:
+       VolumeType: gp3
+       VolumeSize: 30
+       DeleteOnTermination: true
+       Encrypted: true
+   NetworkInterfaces:
+    - AssociatePublicIpAddress: true
+      DeleteOnTermination: true
+      GroupSet:
+       - !Ref WebSG
+      DeviceIndex: 0
+      SubnetId: !Ref WebSubnetId
+   Tags:
+    - Key: Name
+      Value: !Ref WebServerName
+   UserData: String
+
+#セキュリティグループ
+
+ WebSG:
+  Type: AWS::EC2::SecurityGroup
+  Properties:
+   GroupDescription: !Sub Security group attached to ${WebServerName}
+   GroupName: !Ref WebSGName
+   SecurityGroupIngress: 
+    - CidrIp: 0.0.0.0/0
+      Description: SSH port
+      FromPort: 22
+      IpProtocol: tcp
+      ToPort: 22
+    - CidrIp: 0.0.0.0/0
+      Description: HTTP Port
+      FromPort: 80
+      IpProtocol: tcp
+      ToPort: 80
+   VpcId: !Ref VpcId
+
+ AnsibleSG:
+  Type: AWS::EC2::SecurityGroup
+  Properties:
+   GroupDescription: !Sub Security group attached to ${AnsibleServerName}
+   GroupName: !Ref AnsibleSGName
+   SecurityGroupIngress:
+    - CidrIp: 0.0.0.0/0
+      Description: SSH port
+      FromPort: 22
+      IpProtocol: tcp
+      ToPort: 22
+    - CidrIp: 0.0.0.0/0
+      Description: HTTP Port
+      FromPort: 80
+      IpProtocol: tcp
+      ToPort: 80
+   VpcId: !Ref VpcId
+
+#Ansibleサーバ
+
+ AnsibleServer:
+  Type: AWS::EC2::Instance
+  Properties:
+   ImageId: ami-09d3b3274b6c5d4aa
+   InstanceType: t2.micro
+   KeyName: !Ref AnsibleKeyName
+   BlockDeviceMappings:
+    - DeviceName: '/dev/xvda'
+      Ebs:
+       VolumeType: gp3
+       VolumeSize: 30
+       DeleteOnTermination: true
+       Encrypted: true
+   NetworkInterfaces:
+    - AssociatePublicIpAddress: true
+      DeleteOnTermination: true
+      GroupSet:
+       - !Ref AnsibleSG
+      DeviceIndex: 0
+      SubnetId: !Ref AnsibleSubnetId
+   Tags:
+    - Key: Name
+      Value: !Ref AnsibleServerName
+   
+   
