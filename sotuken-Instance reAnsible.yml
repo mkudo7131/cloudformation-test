@@ -82,12 +82,12 @@ Resources:
    GroupDescription: !Sub Security group attached to ${WebServerName}
    GroupName: !Ref WebSGName
    SecurityGroupIngress: 
-    - CidrIp: 0.0.0.0/0
+    - CidrIp: 192.168.1.1/24
       Description: SSH port
       FromPort: 22
       IpProtocol: tcp
       ToPort: 22
-    - CidrIp: 0.0.0.0/0
+    - CidrIp: 192.168.1.1/24
       Description: HTTP Port
       FromPort: 80
       IpProtocol: tcp
@@ -100,12 +100,12 @@ Resources:
    GroupDescription: !Sub Security group attached to ${AnsibleServerName}
    GroupName: !Ref AnsibleSGName
    SecurityGroupIngress:
-    - CidrIp: 0.0.0.0/0
+    - CidrIp: 192.168.1.1/24
       Description: SSH port
       FromPort: 22
       IpProtocol: tcp
       ToPort: 22
-    - CidrIp: 0.0.0.0/0
+    - CidrIp: 192.168.1.1/24
       Description: HTTP Port
       FromPort: 80
       IpProtocol: tcp
