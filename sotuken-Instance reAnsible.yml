@@ -120,7 +120,7 @@ Resources:
    ImageId: ami-09d3b3274b6c5d4aa
    InstanceType: t2.micro
    KeyName: !Ref AnsibleKeyName
-   DesableApiTermination: true
+   DisableApiTermination: true
    BlockDeviceMappings:
     - DeviceName: /dev/xvda
       Ebs:
