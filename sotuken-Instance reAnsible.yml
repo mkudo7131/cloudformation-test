@@ -52,9 +52,16 @@ Resources:
   Type: AWS::EC2::Instance
   Properties:
    ImageId: ami-09d3b3274b6c5d4aa
-   
    InstanceType: t2.micro
    KeyName: !Ref WebKeyName
+   DisableApiTermination: true
+   BlockDeviceMappings:
+    - DeviceName: /dev/xvda
+      Ebs:
+        DeleteOnTermination: true
+        Encrypted: true
+        VolumeSize: 8
+        VolumeType: gp3
    NetworkInterfaces:
     - AssociatePublicIpAddress: true
       DeleteOnTermination: true
@@ -113,10 +120,11 @@ Resources:
    ImageId: ami-09d3b3274b6c5d4aa
    InstanceType: t2.micro
    KeyName: !Ref AnsibleKeyName
+   DesableApiTermination: true
    BlockDeviceMappings:
     - DeviceName: /dev/xvda
       Ebs:
-        DeleteOnTermination: false
+        DeleteOnTermination: true
         Encrypted: true
         VolumeSize: 8
         VolumeType: gp3
